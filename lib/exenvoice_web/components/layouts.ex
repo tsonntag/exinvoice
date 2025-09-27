@@ -36,6 +36,40 @@ defmodule ExenvoiceWeb.Layouts do
   def app(assigns) do
     ~H"""
     <header class="navbar px-4 sm:px-6 lg:px-8">
+      <div class="flex-none">
+        <ul class="flex flex-column px-1 space-x-4 items-center">
+          <li>
+            <a href="/patients" class="btn btn-ghost">Patienten</a>
+          </li>
+          <li>
+            <a href="/invoice_recipients" class="btn btn-ghost">Rechnungsempfänger</a>
+          </li>
+          <li>
+            <a href="/invoices" class="btn btn-ghost">Rechnungen</a>
+          </li>
+          <li>
+            <a href="/events" class="btn btn-ghost">Termine</a>
+          </li>
+          <li>
+            <.theme_toggle />
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <main class="px-4 py-20 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl space-y-4">
+        {render_slot(@inner_block)}
+      </div>
+    </main>
+
+    <.flash_group flash={@flash} />
+    """
+  end
+
+  def app_orig(assigns) do
+    ~H"""
+    <header class="navbar px-4 sm:px-6 lg:px-8">
       <div class="flex-1">
         <a href="/" class="flex-1 flex w-fit items-center gap-2">
           <img src={~p"/images/logo.svg"} width="36" />

@@ -1,21 +1,20 @@
 defmodule ExenvoiceWeb.InvoiceItemController do
   use ExenvoiceWeb, :controller
 
-  alias Exenvoice.InvoiceItems
-  alias Exenvoice.InvoiceItems.InvoiceItem
+  alias Exenvoice.InvoiceItem
 
   def index(conn, _params) do
-    invoice_items = InvoiceItems.list_invoice_items()
+    invoice_items = InvoiceItem.list()
     render(conn, :index, invoice_items: invoice_items)
   end
 
   def new(conn, _params) do
-    changeset = InvoiceItems.change_invoice_item(%InvoiceItem{})
+    changeset = InvoiceItem.change(%InvoiceItem{})
     render(conn, :new, changeset: changeset)
   end
 
   def create(conn, %{"invoice_item" => invoice_item_params}) do
-    case InvoiceItems.create_invoice_item(invoice_item_params) do
+    case InvoiceItem.create(invoice_item_params) do
       {:ok, invoice_item} ->
         conn
         |> put_flash(:info, "Invoice item created successfully.")
@@ -27,20 +26,20 @@ defmodule ExenvoiceWeb.InvoiceItemController do
   end
 
   def show(conn, %{"id" => id}) do
-    invoice_item = InvoiceItems.get_invoice_item!(id)
+    invoice_item = InvoiceItem.get!(id)
     render(conn, :show, invoice_item: invoice_item)
   end
 
   def edit(conn, %{"id" => id}) do
-    invoice_item = InvoiceItems.get_invoice_item!(id)
-    changeset = InvoiceItems.change_invoice_item(invoice_item)
+    invoice_item = InvoiceItem.get!(id)
+    changeset = InvoiceItem.change(invoice_item)
     render(conn, :edit, invoice_item: invoice_item, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "invoice_item" => invoice_item_params}) do
-    invoice_item = InvoiceItems.get_invoice_item!(id)
+    invoice_item = InvoiceItem.get!(id)
 
-    case InvoiceItems.update_invoice_item(invoice_item, invoice_item_params) do
+    case InvoiceItem.update(invoice_item, invoice_item_params) do
       {:ok, invoice_item} ->
         conn
         |> put_flash(:info, "Invoice item updated successfully.")
@@ -52,8 +51,8 @@ defmodule ExenvoiceWeb.InvoiceItemController do
   end
 
   def delete(conn, %{"id" => id}) do
-    invoice_item = InvoiceItems.get_invoice_item!(id)
-    {:ok, _invoice_item} = InvoiceItems.delete_invoice_item(invoice_item)
+    invoice_item = InvoiceItem.get!(id)
+    {:ok, _invoice_item} = InvoiceItem.delete(invoice_item)
 
     conn
     |> put_flash(:info, "Invoice item deleted successfully.")

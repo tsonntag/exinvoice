@@ -18,6 +18,10 @@ defmodule ExenvoiceWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    resources "/events", EventController
+    resources "/invoice_recipients", InvoiceRecipientController
+    resources "/invoices", InvoiceController
+    resources "/patients", PatientController
   end
 
   # Other scopes may use custom stacks.

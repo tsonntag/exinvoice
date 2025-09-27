@@ -1,6 +1,6 @@
 <Layouts.app flash={@flash}>
   <.header>
-    Listing Events
+    Termine
     <:actions>
       <.button href={~p"/events/new"}>
         <.icon name="hero-plus" /> New Event
@@ -9,9 +9,9 @@
   </.header>
 
   <.table id="events" rows={@events} row_click={&JS.navigate(~p"/events/#{&1}")}>
-    <:col :let={event} label="Summary">{event.summary}</:col>
-    <:col :let={event} label="From datetime">{event.from_datetime}</:col>
-    <:col :let={event} label="To datetime">{event.to_datetime}</:col>
+    <:col :let={event} label="Anfang">{event.from_datetime}</:col>
+    <:col :let={event} label="Ende">{event.to_datetime}</:col>
+    <:col :let={event} label="Text">{event.summary}</:col>
     <:action :let={event}>
       <div class="sr-only">
         <.link navigate={~p"/events/#{event}"}>Show</.link>
