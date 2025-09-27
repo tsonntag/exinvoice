@@ -1,5 +1,5 @@
-defmodule ExenvoiceWeb.PageControllerTest do
-  use ExenvoiceWeb.ConnCase
+defmodule ExinvoiceWeb.PageControllerTest do
+  use ExinvoiceWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")

@@ -1,12 +1,12 @@
-defmodule Exenvoice.InvoicesTest do
-  use Exenvoice.DataCase
+defmodule Exinvoice.InvoicesTest do
+  use Exinvoice.DataCase
 
-  alias Exenvoice.Invoices
+  alias Exinvoice.Invoices
 
   describe "invoices" do
-    alias Exenvoice.Invoices.Invoice
+    alias Exinvoice.Invoices.Invoice
 
-    import Exenvoice.InvoicesFixtures
+    import Exinvoice.InvoicesFixtures
 
     @invalid_attrs %{no: nil, date: nil, year_month: nil, diagnosis: nil, sum_events: nil}
 

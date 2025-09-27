@@ -1,0 +1,8 @@
+<Layouts.app flash={@flash}>
+  <.header>
+    Neue Rechnung
+    <!--:subtitle>Use this form to manage event records in your database.</:subtitle-->
+  </.header>
+
+  <.invoice_form changeset={@changeset} action={~p"/invoices"} return_to={~p"/invoices"} />
+</Layouts.app>

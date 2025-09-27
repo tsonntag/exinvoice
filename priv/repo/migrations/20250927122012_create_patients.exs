@@ -1,4 +1,4 @@
-defmodule Exenvoice.Repo.Migrations.CreatePatients do
+defmodule Exinvoice.Repo.Migrations.CreatePatients do
   use Ecto.Migration
 
   def change do

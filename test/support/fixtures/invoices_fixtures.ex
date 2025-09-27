@@ -1,7 +1,7 @@
-defmodule Exenvoice.InvoicesFixtures do
+defmodule Exinvoice.InvoicesFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Exenvoice.Invoices` context.
+  entities via the `Exinvoice.Invoices` context.
   """
 
   @doc """
@@ -17,7 +17,7 @@ defmodule Exenvoice.InvoicesFixtures do
         sum_events: true,
         year_month: ~D[2025-09-26]
       })
-      |> Exenvoice.Invoices.create_invoice()
+      |> Exinvoice.Invoices.create_invoice()
 
     invoice
   end

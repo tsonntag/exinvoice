@@ -1,0 +1,14 @@
+<.form :let={f} for={@changeset} action={@action}>
+  <.input field={f[:nickname]} type="text" label="Suchbegriff" />
+  <.input field={f[:first_name]} type="text" label="Vorname" />
+  <.input field={f[:last_name]} type="text" label="Nachname" />
+  <.input field={f[:diagnosis]} type="text" label="Diagnose" />
+  <.input field={f[:service_description]} type="text" label="Leistungsbeschreibung" />
+  <.input field={f[:price_per_unit]} type="number" label="Preis pro Einheit" />
+  <.input field={f[:minutes_per_unit]} type="number" label="Minuten pro Einheit" />
+  <.input field={f[:show_events]} type="checkbox" label="Termine auf Rechnung" />
+  <footer>
+    <.button variant="primary">Speichern</.button>
+    <.button :if={@return_to} href={@return_to}>Abbrechen</.button>
+  </footer>
+</.form>

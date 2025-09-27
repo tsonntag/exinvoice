@@ -1,7 +1,7 @@
-defmodule Exenvoice.InvoiceRecipientsFixtures do
+defmodule Exinvoice.InvoiceRecipientsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Exenvoice.InvoiceRecipients` context.
+  entities via the `Exinvoice.InvoiceRecipients` context.
   """
 
   @doc """
@@ -21,7 +21,7 @@ defmodule Exenvoice.InvoiceRecipientsFixtures do
         street: "some street",
         zip: "some zip"
       })
-      |> Exenvoice.InvoiceRecipients.create_invoice_recipient()
+      |> Exinvoice.InvoiceRecipients.create_invoice_recipient()
 
     invoice_recipient
   end

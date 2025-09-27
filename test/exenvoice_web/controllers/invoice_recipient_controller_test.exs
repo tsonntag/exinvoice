@@ -1,7 +1,7 @@
-defmodule ExenvoiceWeb.InvoiceRecipientControllerTest do
-  use ExenvoiceWeb.ConnCase
+defmodule ExinvoiceWeb.InvoiceRecipientControllerTest do
+  use ExinvoiceWeb.ConnCase
 
-  import Exenvoice.InvoiceRecipientsFixtures
+  import Exinvoice.InvoiceRecipientsFixtures
 
   @create_attrs %{zip: "some zip", salutation: "some salutation", first_name: "some first_name", last_name: "some last_name", address_line_1: "some address_line_1", address_line_2: "some address_line_2", street: "some street", city: "some city", invoice_salutation: "some invoice_salutation"}
   @update_attrs %{zip: "some updated zip", salutation: "some updated salutation", first_name: "some updated first_name", last_name: "some updated last_name", address_line_1: "some updated address_line_1", address_line_2: "some updated address_line_2", street: "some updated street", city: "some updated city", invoice_salutation: "some updated invoice_salutation"}

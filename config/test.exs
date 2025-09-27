@@ -5,23 +5,23 @@ import Config
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
-config :exenvoice, Exenvoice.Repo,
+config :exinvoice, Exinvoice.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "exenvoice_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "exinvoice_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: System.schedulers_online() * 2
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :exenvoice, ExenvoiceWeb.Endpoint,
+config :exinvoice, ExinvoiceWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "JjNomG3ocKJ13ls1T/N44IJr76VK9UFTdsusKBEQyHc+zlOl3cXgyfU13mRPK5oS",
   server: false
 
 # In test we don't send emails
-config :exenvoice, Exenvoice.Mailer, adapter: Swoosh.Adapters.Test
+config :exinvoice, Exinvoice.Mailer, adapter: Swoosh.Adapters.Test
 
 # Disable swoosh api client as it is only required for production adapters
 config :swoosh, :api_client, false

@@ -1,7 +1,7 @@
-defmodule Exenvoice.EventsFixtures do
+defmodule Exinvoice.EventsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Exenvoice.Events` context.
+  entities via the `Exinvoice.Events` context.
   """
 
   @doc """
@@ -15,7 +15,7 @@ defmodule Exenvoice.EventsFixtures do
         summary: "some summary",
         to_datetime: ~U[2025-09-26 12:20:00Z]
       })
-      |> Exenvoice.Events.create_event()
+      |> Exinvoice.Events.create_event()
 
     event
   end

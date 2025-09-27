@@ -1,7 +1,7 @@
-defmodule ExenvoiceWeb.InvoiceControllerTest do
-  use ExenvoiceWeb.ConnCase
+defmodule ExinvoiceWeb.InvoiceControllerTest do
+  use ExinvoiceWeb.ConnCase
 
-  import Exenvoice.InvoicesFixtures
+  import Exinvoice.InvoicesFixtures
 
   @create_attrs %{no: "some no", date: ~D[2025-09-26], year_month: ~D[2025-09-26], diagnosis: "some diagnosis", sum_events: true}
   @update_attrs %{no: "some updated no", date: ~D[2025-09-27], year_month: ~D[2025-09-27], diagnosis: "some updated diagnosis", sum_events: false}

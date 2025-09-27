@@ -1,12 +1,12 @@
-defmodule Exenvoice.InvoiceItemsTest do
-  use Exenvoice.DataCase
+defmodule Exinvoice.InvoiceItemsTest do
+  use Exinvoice.DataCase
 
-  alias Exenvoice.InvoiceItems
+  alias Exinvoice.InvoiceItems
 
   describe "invoice_items" do
-    alias Exenvoice.InvoiceItems.InvoiceItem
+    alias Exinvoice.InvoiceItems.InvoiceItem
 
-    import Exenvoice.InvoiceItemsFixtures
+    import Exinvoice.InvoiceItemsFixtures
 
     @invalid_attrs %{no: nil, service_description: nil, price_per_unit: nil, minutes_per_unit: nil, show_events: nil}
 

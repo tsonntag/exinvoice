@@ -7,19 +7,19 @@
 # General application configuration
 import Config
 
-config :exenvoice,
-  ecto_repos: [Exenvoice.Repo],
+config :exinvoice,
+  ecto_repos: [Exinvoice.Repo],
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
-config :exenvoice, ExenvoiceWeb.Endpoint,
+config :exinvoice, ExinvoiceWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: ExenvoiceWeb.ErrorHTML, json: ExenvoiceWeb.ErrorJSON],
+    formats: [html: ExinvoiceWeb.ErrorHTML, json: ExinvoiceWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: Exenvoice.PubSub,
+  pubsub_server: Exinvoice.PubSub,
   live_view: [signing_salt: "JHw2WDFE"]
 
 # Configures the mailer
@@ -29,12 +29,12 @@ config :exenvoice, ExenvoiceWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :exenvoice, Exenvoice.Mailer, adapter: Swoosh.Adapters.Local
+config :exinvoice, Exinvoice.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.25.4",
-  exenvoice: [
+  exinvoice: [
     args:
       ~w(js/app.js --bundle --target=es2022 --outdir=../priv/static/assets/js --external:/fonts/* --external:/images/* --alias:@=.),
     cd: Path.expand("../assets", __DIR__),
@@ -44,7 +44,7 @@ config :esbuild,
 # Configure tailwind (the version is required)
 config :tailwind,
   version: "4.1.7",
-  exenvoice: [
+  exinvoice: [
     args: ~w(
       --input=assets/css/app.css
       --output=priv/static/assets/css/app.css
@@ -59,6 +59,10 @@ config :logger, :default_formatter,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :goth, json: {:system, "GOOGLE_CREDENTIALS"}
+
+config :elixir, :time_zone_database, Tz.TimeZoneDatabase
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

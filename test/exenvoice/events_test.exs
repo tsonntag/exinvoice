@@ -1,12 +1,12 @@
-defmodule Exenvoice.EventsTest do
-  use Exenvoice.DataCase
+defmodule Exinvoice.EventsTest do
+  use Exinvoice.DataCase
 
-  alias Exenvoice.Events
+  alias Exinvoice.Events
 
   describe "events" do
-    alias Exenvoice.Events.Event
+    alias Exinvoice.Events.Event
 
-    import Exenvoice.EventsFixtures
+    import Exinvoice.EventsFixtures
 
     @invalid_attrs %{summary: nil, from_datetime: nil, to_datetime: nil}
 

@@ -1,7 +1,7 @@
-defmodule ExenvoiceWeb.EventControllerTest do
-  use ExenvoiceWeb.ConnCase
+defmodule ExinvoiceWeb.EventControllerTest do
+  use ExinvoiceWeb.ConnCase
 
-  import Exenvoice.EventsFixtures
+  import Exinvoice.EventsFixtures
 
   @create_attrs %{summary: "some summary", from_datetime: ~U[2025-09-26 12:20:00Z], to_datetime: ~U[2025-09-26 12:20:00Z]}
   @update_attrs %{summary: "some updated summary", from_datetime: ~U[2025-09-27 12:20:00Z], to_datetime: ~U[2025-09-27 12:20:00Z]}

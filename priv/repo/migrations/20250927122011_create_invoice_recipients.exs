@@ -1,4 +1,4 @@
-defmodule Exenvoice.Repo.Migrations.CreateInvoiceRecipients do
+defmodule Exinvoice.Repo.Migrations.CreateInvoiceRecipients do
   use Ecto.Migration
 
   def change do

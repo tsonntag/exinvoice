@@ -1,7 +1,7 @@
-defmodule ExenvoiceWeb.PatientControllerTest do
-  use ExenvoiceWeb.ConnCase
+defmodule ExinvoiceWeb.PatientControllerTest do
+  use ExinvoiceWeb.ConnCase
 
-  import Exenvoice.PatientsFixtures
+  import Exinvoice.PatientsFixtures
 
   @create_attrs %{nickname: "some nickname", first_name: "some first_name", last_name: "some last_name", diagnosis: "some diagnosis", service_description: "some service_description", price_per_unit: 42, minutes_per_unit: 42, show_events: true}
   @update_attrs %{nickname: "some updated nickname", first_name: "some updated first_name", last_name: "some updated last_name", diagnosis: "some updated diagnosis", service_description: "some updated service_description", price_per_unit: 43, minutes_per_unit: 43, show_events: false}

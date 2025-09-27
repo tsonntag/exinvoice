@@ -1,7 +1,7 @@
-defmodule Exenvoice.PatientsFixtures do
+defmodule Exinvoice.PatientsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Exenvoice.Patients` context.
+  entities via the `Exinvoice.Patients` context.
   """
 
   @doc """
@@ -20,7 +20,7 @@ defmodule Exenvoice.PatientsFixtures do
         service_description: "some service_description",
         show_events: true
       })
-      |> Exenvoice.Patients.create_patient()
+      |> Exinvoice.Patients.create_patient()
 
     patient
   end

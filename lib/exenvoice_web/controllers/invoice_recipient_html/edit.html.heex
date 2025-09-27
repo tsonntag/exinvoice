@@ -1,8 +1,0 @@
-<Layouts.app flash={@flash}>
-  <.header>
-    Edit Invoice recipient {@invoice_recipient.id}
-    <!--:subtitle>Use this form to manage event records in your database.</:subtitle-->
-  </.header>
-
-  <.invoice_recipient_form changeset={@changeset} action={~p"/invoice_recipients/#{@invoice_recipient}"} return_to={~p"/invoice_recipients"} />
-</Layouts.app>

@@ -1,0 +1,8 @@
+<Layouts.app flash={@flash}>
+  <.header>
+    Neuer Patient
+    <!--:subtitle>Use this form to manage event records in your database.</:subtitle-->
+  </.header>
+
+  <.patient_form changeset={@changeset} action={~p"/patients"} return_to={~p"/patients"} />
+</Layouts.app>

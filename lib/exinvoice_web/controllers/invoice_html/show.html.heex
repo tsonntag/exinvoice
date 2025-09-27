@@ -1,0 +1,22 @@
+<Layouts.app flash={@flash}>
+  <.header>
+    Rechnung {@invoice.no}
+    <!--:subtitle>This is a event record from your database.</:subtitle-->
+    <:actions>
+      <.button navigate={~p"/invoices"}>
+        <.icon name="hero-arrow-left" />
+      </.button>
+      <.button variant="primary" navigate={~p"/invoices/#{@invoice}/edit?return_to=show"}>
+        <.icon name="hero-pencil-square" /> Ändern
+      </.button>
+    </:actions>
+  </.header>
+
+  <.list>
+    <:item title="Nummer">{@invoice.no}</:item>
+    <:item title="Datum">{@invoice.date}</:item>
+    <:item title="Monat">{@invoice.year_month}</:item>
+    <:item title="Diagnose">{@invoice.diagnosis}</:item>
+    <:item title="Termine zusammenfassen">{@invoice.sum_events}</:item>
+  </.list>
+</Layouts.app>

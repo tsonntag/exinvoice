@@ -1,7 +1,7 @@
-defmodule ExenvoiceWeb.InvoiceItemControllerTest do
-  use ExenvoiceWeb.ConnCase
+defmodule ExinvoiceWeb.InvoiceItemControllerTest do
+  use ExinvoiceWeb.ConnCase
 
-  import Exenvoice.InvoiceItemsFixtures
+  import Exinvoice.InvoiceItemsFixtures
 
   @create_attrs %{no: 42, service_description: "some service_description", price_per_unit: 42, minutes_per_unit: 42, show_events: true}
   @update_attrs %{no: 43, service_description: "some updated service_description", price_per_unit: 43, minutes_per_unit: 43, show_events: false}

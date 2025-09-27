@@ -1,11 +1,11 @@
 import Config
 
 # Configure your database
-config :exenvoice, Exenvoice.Repo,
+config :exinvoice, Exinvoice.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "exenvoice_dev",
+  database: "exinvoice_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -16,7 +16,7 @@ config :exenvoice, Exenvoice.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.
-config :exenvoice, ExenvoiceWeb.Endpoint,
+config :exinvoice, ExinvoiceWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: String.to_integer(System.get_env("PORT") || "4000")],
@@ -25,8 +25,8 @@ config :exenvoice, ExenvoiceWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "aNEGWzuv+AuRR48yrjEjkzjtVc6uX1shA+yT2kVrLb4gWc+JUOsr9yZUSFnaUNfH",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:exenvoice, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:exenvoice, ~w(--watch)]}
+    esbuild: {Esbuild, :install_and_run, [:exinvoice, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:exinvoice, ~w(--watch)]}
   ]
 
 # ## SSL Support
@@ -53,18 +53,18 @@ config :exenvoice, ExenvoiceWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :exenvoice, ExenvoiceWeb.Endpoint,
+config :exinvoice, ExinvoiceWeb.Endpoint,
   live_reload: [
     web_console_logger: true,
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/exenvoice_web/(?:controllers|live|components|router)/?.*\.(ex|heex)$"
+      ~r"lib/exinvoice_web/(?:controllers|live|components|router)/?.*\.(ex|heex)$"
     ]
   ]
 
 # Enable dev routes for dashboard and mailbox
-config :exenvoice, dev_routes: true
+config :exinvoice, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :default_formatter, format: "[$level] $message\n"

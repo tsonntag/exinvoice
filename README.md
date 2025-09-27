@@ -1,4 +1,4 @@
-# Exenvoice
+# Exinvoice
 
 To start your Phoenix server:
 

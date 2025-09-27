@@ -1,12 +1,12 @@
-defmodule Exenvoice.InvoiceRecipientsTest do
-  use Exenvoice.DataCase
+defmodule Exinvoice.InvoiceRecipientsTest do
+  use Exinvoice.DataCase
 
-  alias Exenvoice.InvoiceRecipients
+  alias Exinvoice.InvoiceRecipients
 
   describe "invoice_recipients" do
-    alias Exenvoice.InvoiceRecipients.InvoiceRecipient
+    alias Exinvoice.InvoiceRecipients.InvoiceRecipient
 
-    import Exenvoice.InvoiceRecipientsFixtures
+    import Exinvoice.InvoiceRecipientsFixtures
 
     @invalid_attrs %{zip: nil, salutation: nil, first_name: nil, last_name: nil, address_line_1: nil, address_line_2: nil, street: nil, city: nil, invoice_salutation: nil}
 

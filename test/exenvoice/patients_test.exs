@@ -1,12 +1,12 @@
-defmodule Exenvoice.PatientsTest do
-  use Exenvoice.DataCase
+defmodule Exinvoice.PatientsTest do
+  use Exinvoice.DataCase
 
-  alias Exenvoice.Patients
+  alias Exinvoice.Patients
 
   describe "patients" do
-    alias Exenvoice.Patients.Patient
+    alias Exinvoice.Patients.Patient
 
-    import Exenvoice.PatientsFixtures
+    import Exinvoice.PatientsFixtures
 
     @invalid_attrs %{nickname: nil, first_name: nil, last_name: nil, diagnosis: nil, service_description: nil, price_per_unit: nil, minutes_per_unit: nil, show_events: nil}
 

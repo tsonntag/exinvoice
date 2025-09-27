@@ -1,7 +1,7 @@
-defmodule Exenvoice.InvoiceItemsFixtures do
+defmodule Exinvoice.InvoiceItemsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Exenvoice.InvoiceItems` context.
+  entities via the `Exinvoice.InvoiceItems` context.
   """
 
   @doc """
@@ -17,7 +17,7 @@ defmodule Exenvoice.InvoiceItemsFixtures do
         service_description: "some service_description",
         show_events: true
       })
-      |> Exenvoice.InvoiceItems.create_invoice_item()
+      |> Exinvoice.InvoiceItems.create_invoice_item()
 
     invoice_item
   end

@@ -1,0 +1,9 @@
+<.form :let={f} for={@changeset} action={@action}>
+  <.input field={f[:from_datetime]} type="datetime-local" label="From" />
+  <.input field={f[:to_datetime]} type="datetime-local" label="Until" />
+  <.input field={f[:summary]} type="text" label="Text" />
+  <footer>
+    <.button variant="primary">Speichern</.button>
+    <.button :if={@return_to} href={@return_to}>Abbrechen</.button>
+  </footer>
+</.form>

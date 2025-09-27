@@ -1,0 +1,15 @@
+<.form :let={f} for={@changeset} action={@action}>
+  <.input field={f[:salutation]} type="text" label="Anrede" />
+  <.input field={f[:first_name]} type="text" label="Vorname" />
+  <.input field={f[:last_name]} type="text" label="NAahname" />
+  <.input field={f[:address_line_1]} type="text" label="Adresszeile 1" />
+  <.input field={f[:address_line_2]} type="text" label="Adresszeile 2" />
+  <.input field={f[:street]} type="text" label="Straße" />
+  <.input field={f[:zip]} type="text" label="PLZ" />
+  <.input field={f[:city]} type="text" label="Stadt" />
+  <.input field={f[:invoice_salutation]} type="text" label="Überschrift" />
+  <footer>
+    <.button variant="primary">Speichern</.button>
+    <.button :if={@return_to} href={@return_to}>Abbrechen</.button>
+  </footer>
+</.form>
