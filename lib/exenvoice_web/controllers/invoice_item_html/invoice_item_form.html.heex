@@ -1,0 +1,11 @@
+<.form :let={f} for={@changeset} action={@action}>
+  <.input field={f[:no]} type="number" label="No" />
+  <.input field={f[:service_description]} type="text" label="Service description" />
+  <.input field={f[:price_per_unit]} type="number" label="Price per unit" />
+  <.input field={f[:minutes_per_unit]} type="number" label="Minutes per unit" />
+  <.input field={f[:show_events]} type="checkbox" label="Show events" />
+  <footer>
+    <.button variant="primary">Save Invoice item</.button>
+    <.button :if={@return_to} href={@return_to}>Cancel</.button>
+  </footer>
+</.form>

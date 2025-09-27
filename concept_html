@@ -1,0 +1,9 @@
+mix phx.gen.html InvoiceRecipient invoice_recipients salutation first_name last_name address_line_1 address_line_2 street zip city invoice_salutation
+
+mix phx.gen.html Patient patients nickname first_name last_name diagnosis service_description price_per_unit:integer minutes_per_unit:integer show_events:boolean invoice_recipient_id:references:invoice_recipients
+
+mix phx.gen.html Invoice invoices no date:date year_month:date diagnosis sum_events:boolean patient_id:references:patients invoice_recipient_id:references:invoice_recipients
+
+mix phx.gen.html InvoiceItem invoice_items no:integer invoice_id:references:invoices service_description price_per_unit:integer minutes_per_unit:integer show_events:boolean
+
+mix phx.gen.html Event events summary from_datetime:utc_datetime to_datetime:utc_datetime invoice_item_id:references:invoice_items

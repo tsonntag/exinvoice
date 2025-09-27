@@ -1,0 +1,133 @@
+##### invoice_recipient
+# salutation   Frau
+# first_name   Lisa
+# last_name    Müller
+# address_line1
+# address_line2
+# street
+# zip
+# city
+# invoice_salutation # Sehr geehrte Frau Müller
+
+mix phx.gen.schema InvoiceRecipient invoice_recipients salutation first_name last_name address_line_1 address_line_2 street zip city invoice_salutation
+
+#### patient
+# nickname
+# first_name
+# last_name
+# diagnosis
+# service_description
+# price_per_unit     # 80€   # 90
+# minutes_per_unit  # 50    # 
+# sum_events
+# invoice_recipient_id
+
+mix phx.gen.schema Patient patients nickname first_name last_name diagnosis service_description price_per_unit:integer minutes_per_unit:integer show_events:boolean invoice_recipient_id:references:invoice_recipients
+
+
+
+##### invoice
+# no   # 2025020
+# date   
+# year_month  # date
+# patient_id
+
+# könnten sich änder: werden daher kopiert
+# diagnosis = patient.diagnosis
+# invoice_recipient_id = patient.invoice_recipient_id
+# sum_events = patient.sum_events
+### has_many invoice_items
+
+mix phx.gen.schema Invoice invoices no date:date year_month:date diagnosis sum_events:boolean patient_id:references:patients invoice_recipient_id:references:invoice_recipients
+
+###### invoice_item
+# no  # 10
+# invoice_id
+# has_many_events
+
+### set when created:
+# service_description = patient.service_description
+# price_per_unit = patient.price_per_unit
+# minutes_per_unit = patient.minutes_per_unit
+# minutes = depends on sum_events
+
+### units = minutes / minuts_per_unit
+### price = price_per_unit * units
+### patient = invoice.patient
+
+mix phx.gen.schema InvoiceItem invoice_items no:integer invoice_id:references:invoices service_description price_per_unit:integer minutes_per_unit:integer show_events:boolean
+
+###### events
+# summary
+# from_datetime
+# to_datetime
+# invoice_item_id    # mehrere events können zu einem item zusammengefasst werden.
+
+### minutes = to_datetime - from_datetime
+
+mix phx.gen.schema Event events summary from_datetime:utc_datetime to_datetime:utc_datetime invoice_item_id:references:invoice_items
+
+ 
+########### algo BESSER #########
+##  complexity: events
+#
+#
+#def Invoice.create_invoices_for_year_month(date, year_month):
+#    events = Event.find(event.from_datetime.month == from_date.month and .... year)
+#    patient_to_events =
+#    |> map(event -> {Patient.find_by_event(event), event})
+#    |> filter( {patient, event} -> patient)
+#    |> group_by({patient, event} -> patient)
+#
+#    for patient, events <- patients_to_events:
+#        invoice = Invoice.create(patient, date, year_month, events)
+#
+#def InvoiceItem.create(pos, invoice, patient, minutes)
+#  InvoiceItem.insert(pos, invoice,
+#    service_description = patient.service_description
+#    price_per_unit = patient.price_per_unit
+#    minutes_per_unit = patient.minutes_per_unit
+#    minutes = minutes
+#  )
+#
+#def Invoice.create(patient, date, year_month, events):
+#    invoice = Invoice.insert(
+#     no = max(Invoice.no, scope: year_month.year) + 1
+#     date,
+#     year_month
+#     diagnosis = patient.diagnosis
+#     invoice_recipient = patient.invoice_recipient
+#     sum_events = patient.sum_events
+#    )
+#    pos = 1
+#    if sum_events:
+#        minutes = sum event.minute over events
+#        invoice_item = InvoiceItem.create(pos, invoice, patient, minutes)
+#        Event.update(invoice_item)
+#    else:
+#     for event in events:
+#         invoice_item = InvoiceItem.create(pos, invoice, patient, event.minutes)
+#         Event.update(invoice_item)
+#         pos += 1
+#
+#
+## returns one patient or :no
+#def Patient.find_by_event(event)
+#    return Patient.where(patients.nickname matches event.summary)
+#
+############ alternativer algo #########
+##   complexity: patients * events
+#def Invoice.create_invoices_for_year_month(date, year_month):
+#    for patient in Patient.all:
+#        Invoice.create(patient, date, year_month):
+#
+#
+#def Patient.create_invoice(patient, date, year_month):
+#    events = Event.find(patient.nickname in summary, event.from_datetime.month == from_date.month and .... year)
+#
+#    if events:
+#       invoice = Invoice.create(patient: patient, date, year_month)
+#       Invoice.create_items(invoice, events)
+#       return invoice
+#
+#

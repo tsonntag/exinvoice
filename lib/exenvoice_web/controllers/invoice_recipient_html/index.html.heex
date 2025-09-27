@@ -1,0 +1,33 @@
+<Layouts.app flash={@flash}>
+  <.header>
+    Listing Invoice recipients
+    <:actions>
+      <.button href={~p"/invoice_recipients/new"}>
+        <.icon name="hero-plus" /> New Invoice recipient
+      </.button>
+    </:actions>
+  </.header>
+
+  <.table id="invoice_recipients" rows={@invoice_recipients} row_click={&JS.navigate(~p"/invoice_recipients/#{&1}")}>
+    <:col :let={invoice_recipient} label="Salutation">{invoice_recipient.salutation}</:col>
+    <:col :let={invoice_recipient} label="First name">{invoice_recipient.first_name}</:col>
+    <:col :let={invoice_recipient} label="Last name">{invoice_recipient.last_name}</:col>
+    <:col :let={invoice_recipient} label="Address line 1">{invoice_recipient.address_line_1}</:col>
+    <:col :let={invoice_recipient} label="Address line 2">{invoice_recipient.address_line_2}</:col>
+    <:col :let={invoice_recipient} label="Street">{invoice_recipient.street}</:col>
+    <:col :let={invoice_recipient} label="Zip">{invoice_recipient.zip}</:col>
+    <:col :let={invoice_recipient} label="City">{invoice_recipient.city}</:col>
+    <:col :let={invoice_recipient} label="Invoice salutation">{invoice_recipient.invoice_salutation}</:col>
+    <:action :let={invoice_recipient}>
+      <div class="sr-only">
+        <.link navigate={~p"/invoice_recipients/#{invoice_recipient}"}>Show</.link>
+      </div>
+      <.link navigate={~p"/invoice_recipients/#{invoice_recipient}/edit"}>Edit</.link>
+    </:action>
+    <:action :let={invoice_recipient}>
+      <.link href={~p"/invoice_recipients/#{invoice_recipient}"} method="delete" data-confirm="Are you sure?">
+        Delete
+      </.link>
+    </:action>
+  </.table>
+</Layouts.app>

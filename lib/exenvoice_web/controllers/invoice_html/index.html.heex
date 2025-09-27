@@ -1,0 +1,29 @@
+<Layouts.app flash={@flash}>
+  <.header>
+    Listing Invoices
+    <:actions>
+      <.button href={~p"/invoices/new"}>
+        <.icon name="hero-plus" /> New Invoice
+      </.button>
+    </:actions>
+  </.header>
+
+  <.table id="invoices" rows={@invoices} row_click={&JS.navigate(~p"/invoices/#{&1}")}>
+    <:col :let={invoice} label="No">{invoice.no}</:col>
+    <:col :let={invoice} label="Date">{invoice.date}</:col>
+    <:col :let={invoice} label="Year month">{invoice.year_month}</:col>
+    <:col :let={invoice} label="Diagnosis">{invoice.diagnosis}</:col>
+    <:col :let={invoice} label="Sum events">{invoice.sum_events}</:col>
+    <:action :let={invoice}>
+      <div class="sr-only">
+        <.link navigate={~p"/invoices/#{invoice}"}>Show</.link>
+      </div>
+      <.link navigate={~p"/invoices/#{invoice}/edit"}>Edit</.link>
+    </:action>
+    <:action :let={invoice}>
+      <.link href={~p"/invoices/#{invoice}"} method="delete" data-confirm="Are you sure?">
+        Delete
+      </.link>
+    </:action>
+  </.table>
+</Layouts.app>

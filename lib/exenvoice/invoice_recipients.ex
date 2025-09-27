@@ -1,0 +1,104 @@
+defmodule Exenvoice.InvoiceRecipients do
+  @moduledoc """
+  The InvoiceRecipients context.
+  """
+
+  import Ecto.Query, warn: false
+  alias Exenvoice.Repo
+
+  alias Exenvoice.InvoiceRecipients.InvoiceRecipient
+
+  @doc """
+  Returns the list of invoice_recipients.
+
+  ## Examples
+
+      iex> list_invoice_recipients()
+      [%InvoiceRecipient{}, ...]
+
+  """
+  def list_invoice_recipients do
+    Repo.all(InvoiceRecipient)
+  end
+
+  @doc """
+  Gets a single invoice_recipient.
+
+  Raises `Ecto.NoResultsError` if the Invoice recipient does not exist.
+
+  ## Examples
+
+      iex> get_invoice_recipient!(123)
+      %InvoiceRecipient{}
+
+      iex> get_invoice_recipient!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_invoice_recipient!(id), do: Repo.get!(InvoiceRecipient, id)
+
+  @doc """
+  Creates a invoice_recipient.
+
+  ## Examples
+
+      iex> create_invoice_recipient(%{field: value})
+      {:ok, %InvoiceRecipient{}}
+
+      iex> create_invoice_recipient(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_invoice_recipient(attrs) do
+    %InvoiceRecipient{}
+    |> InvoiceRecipient.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a invoice_recipient.
+
+  ## Examples
+
+      iex> update_invoice_recipient(invoice_recipient, %{field: new_value})
+      {:ok, %InvoiceRecipient{}}
+
+      iex> update_invoice_recipient(invoice_recipient, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_invoice_recipient(%InvoiceRecipient{} = invoice_recipient, attrs) do
+    invoice_recipient
+    |> InvoiceRecipient.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a invoice_recipient.
+
+  ## Examples
+
+      iex> delete_invoice_recipient(invoice_recipient)
+      {:ok, %InvoiceRecipient{}}
+
+      iex> delete_invoice_recipient(invoice_recipient)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_invoice_recipient(%InvoiceRecipient{} = invoice_recipient) do
+    Repo.delete(invoice_recipient)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking invoice_recipient changes.
+
+  ## Examples
+
+      iex> change_invoice_recipient(invoice_recipient)
+      %Ecto.Changeset{data: %InvoiceRecipient{}}
+
+  """
+  def change_invoice_recipient(%InvoiceRecipient{} = invoice_recipient, attrs \\ %{}) do
+    InvoiceRecipient.changeset(invoice_recipient, attrs)
+  end
+end
