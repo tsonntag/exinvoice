@@ -9,6 +9,7 @@
   </.header>
 
   <.table id="patients" rows={@patients} row_click={&JS.navigate(~p"/patients/#{&1}")}>
+    <:col :let={patient} label="Id">{patient.id}</:col>
     <:col :let={patient} label="Suchbegriff">{patient.nickname}</:col>
     <:col :let={patient} label="Vorname">{patient.first_name}</:col>
     <:col :let={patient} label="Nachname">{patient.last_name}</:col>

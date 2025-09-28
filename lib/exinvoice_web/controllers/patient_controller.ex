@@ -1,7 +1,7 @@
 defmodule ExinvoiceWeb.PatientController do
   use ExinvoiceWeb, :controller
 
-  alias Exinvoice.Patient
+  alias Exinvoice.{Patient, Repo}
 
   def index(conn, _params) do
     patients = Patient.list()
@@ -26,7 +26,7 @@ defmodule ExinvoiceWeb.PatientController do
   end
 
   def show(conn, %{"id" => id}) do
-    patient = Patient.get!(id)
+    patient = Patient.get!(id) |> Repo.preload(:invoice_recipient)
     render(conn, :show, patient: patient)
   end
 

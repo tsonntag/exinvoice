@@ -1,6 +1,6 @@
 <Layouts.app flash={@flash}>
   <.header>
-    Patient {@patient.title}
+    Patient {title(@patient)}
     <!--:subtitle>This is a event record from your database.</:subtitle-->
     <:actions>
       <.button navigate={~p"/patients"}>
@@ -13,6 +13,7 @@
   </.header>
 
   <.list>
+    <:item title="Id">{@patient.id}</:item>
     <:item title="Suchbegriff">{@patient.nickname}</:item>
     <:item title="Vorname">{@patient.first_name}</:item>
     <:item title="Nachname">{@patient.last_name}</:item>
@@ -21,5 +22,8 @@
     <:item title="Preis pro Einheit">{@patient.price_per_unit}</:item>
     <:item title="Minuten pro Einheit">{@patient.minutes_per_unit}</:item>
     <:item title="Termine auf Rechnung">{@patient.show_events}</:item>
+    <:item title="Rechnungsempfänger">
+      <.link navigate={~p"/invoice_recipients/#{@patient.invoice_recipient}"}>{@patient.invoice_recipient.last_name}</.link>
+    </:item>
   </.list>
 </Layouts.app>

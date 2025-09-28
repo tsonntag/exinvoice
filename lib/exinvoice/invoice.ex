@@ -2,8 +2,7 @@ defmodule Exinvoice.Invoice do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query, warn: false
-  alias Exinvoice.Repo
-  alias Exinvoice.Invoice
+  alias Exinvoice.{Event, Invoice, InvoiceRecipient, Patient, Repo}
 
   schema "invoices" do
     field :no, :string
@@ -12,7 +11,9 @@ defmodule Exinvoice.Invoice do
     field :diagnosis, :string
     field :sum_events, :boolean, default: false
     field :patient_id, :id
-    field :invoice_recipient_id, :id
+#   field :invoice_recipient_id, :id
+
+    belongs_to :invoice_recipient, InvoiceRecipient
 
     timestamps(type: :utc_datetime)
   end
@@ -117,4 +118,51 @@ defmodule Exinvoice.Invoice do
   def change(%Invoice{} = invoice, attrs \\ %{}) do
     Invoice.changeset(invoice, attrs)
   end
+
+  def create_for_year_month(year, month) do
+    {:ok, month_date} = Date.new(year, month, 1)
+    Invoice.create_for_year_month(month_date)
+  end
+
+  def create_for_year_month(month_date) do
+    events = Event.list_for_year_month(month_date)
+
+    IO.inspect(events, label: "Events")
+
+    patients_to_events =
+      events
+      |> Enum.map(fn event -> {Patient.find_by_nickname(event.summary), event} end)
+      |> Enum.filter(fn {patient, _event} -> patient end)
+      |> Enum.group_by(fn {patient, _event} -> patient end)
+
+    for { patient, pats_evs } <- patients_to_events do
+        events = Enum.map(pats_evs, fn {_patient, event} -> event end)
+        Patient.add_events!(patient, events)
+
+  #        invoice = Invoice.create(patient, date, year_month, events)
+#   IO.inspect(from_date, label: "From Date")
+#   IO.inspect(to_date, label: "To Date")
+    end
+  end
+
+  defp from_patient(%Patient{} = patient) do
+    %Invoice{
+      patient_id: patient.id,
+      diagnosis: patient.diagnosis,
+      invoice_recipient_id: patient.invoice_recipient_id,
+      sum_events: patient.sum_events
+    }
+
+  end
+
+    #
+# invoice = Invoice.insert(
+    #     no = max(Invoice.no, scope: year_month.year) + 1
+    #     date,
+    #     year_month
+    #     diagnosis = patient.diagnosis
+    #     invoice_recipient = patient.invoice_recipient
+    #     sum_events = patient.sum_events
+    #    )
+
 end

@@ -2,8 +2,7 @@ defmodule Exinvoice.Patient do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query, warn: false
-  alias Exinvoice.Repo
-  alias Exinvoice.Patient
+  alias Exinvoice.{Event, InvoiceRecipient, Patient, Repo}
 
   schema "patients" do
     field :nickname, :string
@@ -14,7 +13,9 @@ defmodule Exinvoice.Patient do
     field :price_per_unit, :integer
     field :minutes_per_unit, :integer
     field :show_events, :boolean, default: false
-    field :invoice_recipient_id, :id
+
+    belongs_to :invoice_recipient, InvoiceRecipient
+    has_many :events, Event
 
     timestamps(type: :utc_datetime)
   end
@@ -135,5 +136,22 @@ defmodule Exinvoice.Patient do
   """
   def change(%Patient{} = patient, attrs \\ %{}) do
     Patient.changeset(patient, attrs)
+  end
+
+  def find_by_nickname(nickname) do
+    term = "%#{nickname}%"
+    query = from p in Patient, where: ilike(p.nickname,^term)
+    Repo.one(query)
+  end
+
+  def add_events(%Patient{} = patient, events) do
+#   for event in events do
+
+
+#   end
+#   patient
+#   |> Repo.preload(:events)
+#   |> Ecto.Changeset.put_assoc(:events, [event_changeset])
+#   |> Repo.update()
   end
 end

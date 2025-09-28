@@ -1,6 +1,7 @@
 <Layouts.app flash={@flash}>
   <.header>
-    Termin {@event.text}
+    Termin {@event.summary}
+
     <!--:subtitle>This is a event record from your database.</:subtitle-->
     <:actions>
       <.button navigate={~p"/events"}>

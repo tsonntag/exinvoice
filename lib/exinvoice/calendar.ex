@@ -1,22 +1,18 @@
 defmodule Exinvoice.Calendar do
   @calendar_id "google@sonntagsbox.de"
 
+  require Logger
   alias Exinvoice.Event
+  alias Exinvoice.Repo
 
-  def to_event(event_map) do
-    start_datetime = event_map["start"]["dateTime"] || event_map["start"]["date"]
-    #   start_tz = ebin_time = event_map["end"]["timeZone"]
-    {:ok, from_datetime, utc_offset} = DateTime.from_iso8601(start_datetime)
+  def save_events_for_month(year, month, calendar_id ) do
+    events = get_events_for_month(year, month, calendar_id)
 
-    end_datetime = event_map["end"]["dateTime"] || event_map["end"]["date"]
-    #    end_tz = event_map["end"]["timeZone"]
-    {:ok, to_datetime, utc_offset} = DateTime.from_iso8601(end_datetime)
-
-    %Event{
-      summary: event_map["summary"],
-      from_datetime: from_datetime,
-      to_datetime: to_datetime
-    }
+    Enum.each(events, fn event ->
+      Logger.info("Inserting event: #{inspect(event)}")
+      event
+      |> Repo.insert(on_conflict: :nothing)
+    end)
   end
 
   def get_events_for_month(year, month, calendar_id)
@@ -26,13 +22,7 @@ defmodule Exinvoice.Calendar do
   end
 
   def get_events_for_month(%Date{} = month_date, calendar_id) do
-    tz = "Europe/Berlin"
-    first_day = Date.beginning_of_month(month_date)
-    last_day = Date.end_of_month(first_day)
-    midnight = ~T[00:00:00]
-    {:ok, time_min} = DateTime.new(first_day, midnight, tz)
-    {:ok, time_max} = DateTime.new(last_day, midnight, tz)
-
+    {time_min, time_max} = Event.first_and_last_date_of_month(month_date)
     get_events(time_min, time_max, calendar_id)
     |> Enum.map(&to_event/1)
   end
@@ -70,5 +60,21 @@ defmodule Exinvoice.Calendar do
 
     resp.body["items"]
     |> IO.inspect(label: "Calendar Events")
+  end
+
+  defp to_event(event_map) do
+    start_datetime = event_map["start"]["dateTime"] || event_map["start"]["date"]
+    #   start_tz = ebin_time = event_map["end"]["timeZone"]
+    {:ok, from_datetime, _utc_offset} = DateTime.from_iso8601(start_datetime)
+
+    end_datetime = event_map["end"]["dateTime"] || event_map["end"]["date"]
+    #    end_tz = event_map["end"]["timeZone"]
+    {:ok, to_datetime, _utc_offset} = DateTime.from_iso8601(end_datetime)
+
+    %Event{
+      summary: event_map["summary"],
+      from_datetime: from_datetime,
+      to_datetime: to_datetime
+    }
   end
 end

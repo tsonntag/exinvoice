@@ -2,8 +2,7 @@ defmodule Exinvoice.InvoiceRecipient do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query, warn: false
-  alias Exinvoice.Repo
-  alias Exinvoice.InvoiceRecipient
+  alias Exinvoice.{InvoiceRecipient, Repo, Invoice}
 
   schema "invoice_recipients" do
     field :salutation, :string
@@ -15,6 +14,8 @@ defmodule Exinvoice.InvoiceRecipient do
     field :zip, :string
     field :city, :string
     field :invoice_salutation, :string
+
+    has_many :invoices, Invoice
 
     timestamps(type: :utc_datetime)
   end
@@ -37,8 +38,6 @@ defmodule Exinvoice.InvoiceRecipient do
       :salutation,
       :first_name,
       :last_name,
-      :address_line_1,
-      :address_line_2,
       :street,
       :zip,
       :city,

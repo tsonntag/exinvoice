@@ -9,6 +9,7 @@
   </.header>
 
   <.table id="invoice_recipients" rows={@invoice_recipients} row_click={&JS.navigate(~p"/invoice_recipients/#{&1}")}>
+    <:col :let={invoice_recipient} label="Id">{invoice_recipient.id}</:col>
     <:col :let={invoice_recipient} label="Anrede">{invoice_recipient.salutation}</:col>
     <:col :let={invoice_recipient} label="Vorname">{invoice_recipient.first_name}</:col>
     <:col :let={invoice_recipient} label="Nachname">{invoice_recipient.last_name}</:col>
@@ -26,7 +27,7 @@
     </:action>
     <:action :let={invoice_recipient}>
       <.link href={~p"/invoice_recipients/#{invoice_recipient}"} method="delete" data-confirm="Sind sie sicher?">
-        Delete
+        Löschen
       </.link>
     </:action>
   </.table>

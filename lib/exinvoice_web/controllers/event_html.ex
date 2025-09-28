@@ -14,4 +14,8 @@ defmodule ExinvoiceWeb.EventHTML do
   attr :return_to, :string, default: nil
 
   def event_form(assigns)
+
+  def text(event) do
+    "#{event.summary} (#{event.from_datetime} - #{event.to_datetime})"
+  end
 end

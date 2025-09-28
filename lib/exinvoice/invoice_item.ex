@@ -2,9 +2,8 @@ defmodule Exinvoice.InvoiceItem do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query, warn: false
-  alias Exinvoice.Repo
 
-  alias Exinvoice.InvoiceItem
+  alias Exinvoice.{Event, Invoice, InvoiceItem, Patient, Repo}
 
   schema "invoice_items" do
     field :no, :integer
@@ -12,7 +11,9 @@ defmodule Exinvoice.InvoiceItem do
     field :price_per_unit, :integer
     field :minutes_per_unit, :integer
     field :show_events, :boolean, default: false
-    field :invoice_id, :id
+
+    belongs_to :invoice, Invoice
+    has_many :events, Event
 
     timestamps(type: :utc_datetime)
   end

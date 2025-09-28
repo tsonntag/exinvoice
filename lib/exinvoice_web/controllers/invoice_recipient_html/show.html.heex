@@ -1,18 +1,19 @@
 <Layouts.app flash={@flash}>
   <.header>
-    Rechnungsempfänger {@invoice_recipient.title}
+    Rechnungsempfänger {@invoice_recipient.last_name}
     <!--:subtitle>This is a event record from your database.</:subtitle-->
     <:actions>
       <.button navigate={~p"/invoice_recipients"}>
         <.icon name="hero-arrow-left" />
       </.button>
       <.button variant="primary" navigate={~p"/invoice_recipients/#{@invoice_recipient}/edit?return_to=show"}>
-        <.icon name="hero-pencil-square" /> Ändern invoice_recipient
+        <.icon name="hero-pencil-square" /> Ändern
       </.button>
     </:actions>
   </.header>
 
   <.list>
+    <:item title="Id">{@invoice_recipient.id}</:item>
     <:item title="Anrede">{@invoice_recipient.salutation}</:item>
     <:item title="Vorname">{@invoice_recipient.first_name}</:item>
     <:item title="Nachname">{@invoice_recipient.last_name}</:item>

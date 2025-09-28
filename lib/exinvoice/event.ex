@@ -2,14 +2,15 @@ defmodule Exinvoice.Event do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query, warn: false
-  alias Exinvoice.Repo
-  alias Exinvoice.Event
+  alias Exinvoice.{Event, Invoice, Patient, Repo}
 
   schema "events" do
     field :summary, :string
     field :from_datetime, :utc_datetime
     field :to_datetime, :utc_datetime
-    field :invoice_item_id, :id
+
+    belongs_to :patient, Patient
+    belongs_to :invoice_item, InvoiceItem
 
     timestamps(type: :utc_datetime)
   end
@@ -113,5 +114,29 @@ defmodule Exinvoice.Event do
   """
   def change(%Event{} = event, attrs \\ %{}) do
     Event.changeset(event, attrs)
+  end
+
+  def first_and_last_date_of_month(%Date{} = month_date) do
+    first_day = Date.beginning_of_month(month_date)
+    last_day = Date.end_of_month(first_day)
+    midnight = ~T[00:00:00]
+    tz = "Europe/Berlin"
+    {:ok, time_min} = DateTime.new(first_day, midnight, tz)
+    {:ok, time_max} = DateTime.new(last_day, midnight, tz)
+    {time_min, time_max}
+  end
+
+  def list_for_year_month(year, month) do
+    {:ok, month_date} = Date.new(year, month, 1)
+    list_for_year_month(month_date)
+  end
+
+  def list_for_year_month(month_date) do
+    {from_date, to_date} = Event.first_and_last_date_of_month(month_date)
+
+    from(event in Event,
+      where: event.from_datetime >= ^from_date and event.from_datetime <= ^to_date
+    )
+    |> Repo.all()
   end
 end
