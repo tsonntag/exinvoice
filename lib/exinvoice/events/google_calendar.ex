@@ -1,8 +1,8 @@
-defmodule Exinvoice.Calendar do
+defmodule Exinvoice.Events.GoogleCalendar do
   @calendar_id "google@sonntagsbox.de"
 
   require Logger
-  alias Exinvoice.Event
+  alias Exinvoice.Events.Event
   alias Exinvoice.Repo
 
   def save_events_for_month(year, month, calendar_id ) do
@@ -23,6 +23,7 @@ defmodule Exinvoice.Calendar do
 
   def get_events_for_month(%Date{} = month_date, calendar_id) do
     {time_min, time_max} = Event.first_and_last_date_of_month(month_date)
+
     get_events(time_min, time_max, calendar_id)
     |> Enum.map(&to_event/1)
   end

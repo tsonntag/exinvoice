@@ -6,7 +6,8 @@ defmodule Exinvoice.InvoiceItems do
   import Ecto.Query, warn: false
   alias Exinvoice.Repo
 
-  alias Exinvoice.InvoiceItems.InvoiceItem
+  alias Exinvoice.Invoice.InvoiceItem
+
 
   @doc """
   Returns the list of invoice_items.
@@ -17,7 +18,7 @@ defmodule Exinvoice.InvoiceItems do
       [%InvoiceItem{}, ...]
 
   """
-  def list_invoice_items do
+  def list_invoice_items() do
     Repo.all(InvoiceItem)
   end
 
@@ -35,7 +36,9 @@ defmodule Exinvoice.InvoiceItems do
       ** (Ecto.NoResultsError)
 
   """
-  def get_invoice_item!(id), do: Repo.get!(InvoiceItem, id)
+  def get_invoice_item!(id) do
+    Repo.get!(InvoiceItem, id)
+  end
 
   @doc """
   Creates a invoice_item.
@@ -86,7 +89,7 @@ defmodule Exinvoice.InvoiceItems do
 
   """
   def delete_invoice_item(%InvoiceItem{} = invoice_item) do
-    Repo.delete(invoice_item)
+    Repo.delete_invoice_item(invoice_item)
   end
 
   @doc """

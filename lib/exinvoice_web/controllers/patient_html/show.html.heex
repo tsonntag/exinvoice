@@ -26,4 +26,20 @@
       <.link navigate={~p"/invoice_recipients/#{@patient.invoice_recipient}"}>{@patient.invoice_recipient.last_name}</.link>
     </:item>
   </.list>
+
+  <p>
+    Termine
+  </p>
+
+ <.table id="events" rows={@patient.events} row_click={&JS.navigate(~p"/events/#{&1}")}>
+    <:col :let={event} label="Start">{event.from_datetime}</:col>
+    <:col :let={event} label="Ende">{event.to_datetime}</:col>
+    <:col :let={event} label="Text">{event.summary}</:col>
+    <:action :let={event}>
+      <div class="sr-only">
+        <.link navigate={~p"/events/#{event}"}>Show</.link>
+      </div>
+    </:action>
+  </.table>
+
 </Layouts.app>

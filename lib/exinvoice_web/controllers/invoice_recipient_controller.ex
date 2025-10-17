@@ -1,20 +1,21 @@
 defmodule ExinvoiceWeb.InvoiceRecipientController do
   use ExinvoiceWeb, :controller
 
-  alias Exinvoice.InvoiceRecipient
+  alias Exinvoice.InvoiceRecipients
+  alias Exinvoice.InvoiceRecipients.InvoiceRecipient
 
   def index(conn, _params) do
-    invoice_recipients = InvoiceRecipient.list()
+    invoice_recipients = InvoiceRecipients.list()
     render(conn, :index, invoice_recipients: invoice_recipients)
   end
 
   def new(conn, _params) do
-    changeset = InvoiceRecipient.change(%InvoiceRecipient{})
+    changeset = InvoiceRecipients.change(%InvoiceRecipient{})
     render(conn, :new, changeset: changeset)
   end
 
   def create(conn, %{"invoice_recipient" => invoice_recipient_params}) do
-    case InvoiceRecipient.create(invoice_recipient_params) do
+    case InvoiceRecipients.create(invoice_recipient_params) do
       {:ok, invoice_recipient} ->
         conn
         |> put_flash(:info, "Invoice recipient created successfully.")
@@ -26,20 +27,20 @@ defmodule ExinvoiceWeb.InvoiceRecipientController do
   end
 
   def show(conn, %{"id" => id}) do
-    invoice_recipient = InvoiceRecipient.get!(id)
+    invoice_recipient = InvoiceRecipients.get_invoice_recipient!(id)
     render(conn, :show, invoice_recipient: invoice_recipient)
   end
 
   def edit(conn, %{"id" => id}) do
-    invoice_recipient = InvoiceRecipient.get!(id)
-    changeset = InvoiceRecipient.change(invoice_recipient)
+    invoice_recipient = InvoiceRecipients.get_invoice_recipient!(id)
+    changeset = InvoiceRecipients.change(invoice_recipient)
     render(conn, :edit, invoice_recipient: invoice_recipient, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "invoice_recipient" => invoice_recipient_params}) do
-    invoice_recipient = InvoiceRecipient.get!(id)
+    invoice_recipient = InvoiceRecipients.get_invoice_recipient!(id)
 
-    case InvoiceRecipient.update(invoice_recipient, invoice_recipient_params) do
+    case InvoiceRecipients.update(invoice_recipient, invoice_recipient_params) do
       {:ok, invoice_recipient} ->
         conn
         |> put_flash(:info, "Invoice recipient updated successfully.")
@@ -51,8 +52,8 @@ defmodule ExinvoiceWeb.InvoiceRecipientController do
   end
 
   def delete(conn, %{"id" => id}) do
-    invoice_recipient = InvoiceRecipient.get!(id)
-    {:ok, _invoice_recipient} = InvoiceRecipient.delete(invoice_recipient)
+    invoice_recipient = InvoiceRecipients.get_invoice_recipient!(id)
+    {:ok, _invoice_recipient} = InvoiceRecipients.delete(invoice_recipient)
 
     conn
     |> put_flash(:info, "Invoice recipient deleted successfully.")

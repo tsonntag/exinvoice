@@ -1,10 +1,6 @@
 defmodule Exinvoice.InvoiceRecipients do
-  @moduledoc """
-  The InvoiceRecipients context.
-  """
-
+  use Ecto.Schema
   import Ecto.Query, warn: false
-  alias Exinvoice.Repo
 
   alias Exinvoice.InvoiceRecipients.InvoiceRecipient
 
@@ -94,7 +90,7 @@ defmodule Exinvoice.InvoiceRecipients do
 
   ## Examples
 
-      iex> change_invoice_recipient(invoice_recipient)
+      iex> change(invoice_recipient)
       %Ecto.Changeset{data: %InvoiceRecipient{}}
 
   """

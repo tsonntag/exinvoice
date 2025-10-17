@@ -1,20 +1,21 @@
 defmodule ExinvoiceWeb.EventController do
   use ExinvoiceWeb, :controller
 
-  alias Exinvoice.Event
+  alias Exinvoice.Events
+  alias Exinvoice.Events.Event
 
   def index(conn, _params) do
-    events = Event.list()
+    events = Events.list()
     render(conn, :index, events: events)
   end
 
   def new(conn, _params) do
-    changeset = Event.change(%Event{})
+    changeset = Events.change(%Event{})
     render(conn, :new, changeset: changeset)
   end
 
   def create(conn, %{"event" => event_params}) do
-    case Event.create(event_params) do
+    case Events.create(event_params) do
       {:ok, event} ->
         conn
         |> put_flash(:info, "Event created successfully.")
@@ -26,20 +27,20 @@ defmodule ExinvoiceWeb.EventController do
   end
 
   def show(conn, %{"id" => id}) do
-    event = Event.get!(id)
+    event = Events.get_event!(id)
     render(conn, :show, event: event)
   end
 
   def edit(conn, %{"id" => id}) do
-    event = Event.get!(id)
-    changeset = Event.change(event)
+    event = Events.get_event!(id)
+    changeset = Events.change(event)
     render(conn, :edit, event: event, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "event" => event_params}) do
-    event = Event.get!(id)
+    event = Events.get_event!(id)
 
-    case Event.update(event, event_params) do
+    case Events.update(event, event_params) do
       {:ok, event} ->
         conn
         |> put_flash(:info, "Event updated successfully.")
@@ -51,8 +52,8 @@ defmodule ExinvoiceWeb.EventController do
   end
 
   def delete(conn, %{"id" => id}) do
-    event = Event.get!(id)
-    {:ok, _event} = Event.delete(event)
+    event = Events.get_event!(id)
+    {:ok, _event} = Events.delete(event)
 
     conn
     |> put_flash(:info, "Event deleted successfully.")

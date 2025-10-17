@@ -1,40 +1,23 @@
-defmodule Exinvoice.Invoice do
-  use Ecto.Schema
-  import Ecto.Changeset
-  import Ecto.Query, warn: false
-  alias Exinvoice.{Event, Invoice, InvoiceRecipient, Patient, Repo}
-
-  schema "invoices" do
-    field :no, :string
-    field :date, :date
-    field :year_month, :date
-    field :diagnosis, :string
-    field :sum_events, :boolean, default: false
-    field :patient_id, :id
-#   field :invoice_recipient_id, :id
-
-    belongs_to :invoice_recipient, InvoiceRecipient
-
-    timestamps(type: :utc_datetime)
-  end
-
-  @doc false
-  def changeset(invoice, attrs) do
-    invoice
-    |> cast(attrs, [:no, :date, :year_month, :diagnosis, :sum_events])
-    |> validate_required([:no, :date, :year_month, :diagnosis, :sum_events])
-  end
+defmodule Exinvoice.Invoices do
+  @moduledoc """
+  The Invoices context.
+  """
+  alias Exinvoice.Repo
+  alias Exinvoice.Patients
+  alias Exinvoice.Patients.Patient
+  alias Exinvoice.Events
+  alias Exinvoice.Invoices.Invoice
 
   @doc """
   Returns the list of invoices.
 
   ## Examples
 
-      iex> list()
+      iex> list_invoices()
       [%Invoice{}, ...]
 
   """
-  def list do
+  def list_invoices() do
     Repo.all(Invoice)
   end
 
@@ -45,28 +28,28 @@ defmodule Exinvoice.Invoice do
 
   ## Examples
 
-      iex> get!(123)
+      iex> get_invoice!(123)
       %Invoice{}
 
-      iex> get!(456)
+      iex> get_invoice!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get!(id), do: Repo.get!(Invoice, id)
+  def get_invoice!(id), do: Repo.get!(Invoice, id)
 
   @doc """
   Creates a invoice.
 
   ## Examples
 
-      iex> create(%{field: value})
+      iex> create_invoice(%{field: value})
       {:ok, %Invoice{}}
 
-      iex> create(%{field: bad_value})
+      iex> create_invoice(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create(attrs) do
+  def create_invoice(attrs) do
     %Invoice{}
     |> Invoice.changeset(attrs)
     |> Repo.insert()
@@ -77,14 +60,14 @@ defmodule Exinvoice.Invoice do
 
   ## Examples
 
-      iex> update(invoice, %{field: new_value})
+      iex> update_invoice(invoice, %{field: new_value})
       {:ok, %Invoice{}}
 
-      iex> update(invoice, %{field: bad_value})
+      iex> update_invoice(invoice, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update(%Invoice{} = invoice, attrs) do
+  def update_invoice(%Invoice{} = invoice, attrs) do
     invoice
     |> Invoice.changeset(attrs)
     |> Repo.update()
@@ -95,14 +78,14 @@ defmodule Exinvoice.Invoice do
 
   ## Examples
 
-      iex> delete(invoice)
+      iex> delete_invoice(invoice)
       {:ok, %Invoice{}}
 
-      iex> delete(invoice)
+      iex> delete_invoice(invoice)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete(%Invoice{} = invoice) do
+  def delete_invoice(%Invoice{} = invoice) do
     Repo.delete(invoice)
   end
 
@@ -111,33 +94,33 @@ defmodule Exinvoice.Invoice do
 
   ## Examples
 
-      iex> change(invoice)
+      iex> change_invoice(invoice)
       %Ecto.Changeset{data: %Invoice{}}
 
   """
-  def change(%Invoice{} = invoice, attrs \\ %{}) do
+  def change_invoice(%Invoice{} = invoice, attrs \\ %{}) do
     Invoice.changeset(invoice, attrs)
   end
 
   def create_for_year_month(year, month) do
     {:ok, month_date} = Date.new(year, month, 1)
-    Invoice.create_for_year_month(month_date)
+    create_for_year_month(month_date)
   end
 
   def create_for_year_month(month_date) do
-    events = Event.list_for_year_month(month_date)
+    events = Events.list_for_year_month(month_date)
 
     IO.inspect(events, label: "Events")
 
     patients_to_events =
       events
-      |> Enum.map(fn event -> {Patient.find_by_nickname(event.summary), event} end)
+      |> Enum.map(fn event -> {Patients.find_by_nickname(event.summary), event} end)
       |> Enum.filter(fn {patient, _event} -> patient end)
       |> Enum.group_by(fn {patient, _event} -> patient end)
 
     for { patient, pats_evs } <- patients_to_events do
         events = Enum.map(pats_evs, fn {_patient, event} -> event end)
-        Patient.add_events!(patient, events)
+        Patients.add_events!(patient, events)
 
   #        invoice = Invoice.create(patient, date, year_month, events)
 #   IO.inspect(from_date, label: "From Date")
@@ -145,7 +128,7 @@ defmodule Exinvoice.Invoice do
     end
   end
 
-  defp from_patient(%Patient{} = patient) do
+  def invoice_from_patient(%Patient{} = patient) do
     %Invoice{
       patient_id: patient.id,
       diagnosis: patient.diagnosis,
